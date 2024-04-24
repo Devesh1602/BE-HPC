@@ -1,0 +1,57 @@
+Adjacency List Representation:
+vector<int> adj[MAXN+5]; // adjacency list
+This line declares an array of vectors called adj, where each element adj[i] represents the adjacency list of vertex i.
+MAXN is a constant representing the maximum number of nodes in the graph.
+
+Visited Array:
+bool visited[MAXN+5]; // mark visited nodes
+This array is used to mark whether each node has been visited during the traversal.
+visited[i] will be true if node i has been visited and false otherwise.
+
+Depth-First Search (DFS) Function:
+void dfs(int node) {
+    visited[node] = true;
+    #pragma omp parallel for
+    for (int i = 0; i < adj[node].size(); i++) {
+        int next_node = adj[node][i];
+        if (!visited[next_node]) {
+            dfs(next_node);
+        }
+    }
+}
+This function performs DFS traversal starting from the given node.
+It marks the current node as visited (visited[node] = true) to prevent revisiting it.
+Then, it iterates over all neighbors of the current node using a parallel loop (#pragma omp parallel for).
+For each unvisited neighbor (!visited[next_node]), it recursively calls dfs to explore further.
+
+Main Function:
+int main() {
+    // Input number of nodes (n), number of edges (m), and start node
+    int n, m;
+    cin >> n >> m;
+    // Read edges and populate adjacency list
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v); // Add v to the adjacency list of u
+        adj[v].push_back(u); // Add u to the adjacency list of v
+    }
+    // Input start node for DFS
+    int start_node;
+    cin >> start_node;
+    // Perform DFS from the start node
+    dfs(start_node);
+    // Print visited nodes
+    for (int i = 1; i <= n; i++) {
+        if (visited[i]) {
+            cout << i << " "; // Print visited node
+        }
+    }
+    cout << endl;
+    return 0;
+}
+This is the main function where the graph is read from the standard input, and DFS is performed from the specified start node.
+It first reads the number of nodes (n), number of edges (m), and the start node.
+Then, it reads the edges and populates the adjacency list accordingly.
+After that, it calls the dfs function from the start node to perform DFS traversal.
+Finally, it prints the visited nodes after the DFS traversal is completed.
