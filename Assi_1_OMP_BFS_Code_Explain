@@ -1,0 +1,52 @@
+Input:
+int num_vertices, num_edges, source;
+cin >> num_vertices >> num_edges >> source;
+This part of the code reads three integers from the standard input:
+num_vertices: The number of vertices in the graph.
+num_edges: The number of edges in the graph.
+source: The source vertex from which the BFS traversal will begin.
+
+Creating the Adjacency List:
+vector<vector<int>> adj_list(num_vertices + 1);
+A 2D vector adj_list is declared to represent the adjacency list of the graph.
+The adjacency list stores the neighbors of each vertex in the graph.
+Each element adj_list[u] is a vector containing the neighbors of vertex u.
+
+Populating the Adjacency List:
+for (int i = 0; i < num_edges; i++) {
+    int u, v;
+    cin >> u >> v;
+    adj_list[u].push_back(v);
+    adj_list[v].push_back(u);
+}
+This loop reads the edges of the graph from the standard input and populates the adjacency list accordingly.
+For each edge (u, v), vertices v and u are added to each other's adjacency lists.
+
+BFS Traversal:
+queue<int> q;
+vector<bool> visited(num_vertices + 1, false);
+q.push(source);
+visited[source] = true;
+while (!q.empty()) {
+    int curr_vertex = q.front();
+    q.pop();
+    cout << curr_vertex << " ";
+    for (int i = 0; i < adj_list[curr_vertex].size(); i++) {
+        int neighbour = adj_list[curr_vertex][i];
+        if (!visited[neighbour]) {
+            visited[neighbour] = true;
+            q.push(neighbour);
+        }
+    }
+}
+A queue q is used to perform BFS traversal. Initially, the source vertex is pushed onto the queue.
+A boolean vector visited is used to mark vertices as visited to avoid revisiting them.
+Inside the while loop, the front vertex of the queue is removed (q.front()), printed, and then removed from the queue (q.pop()).
+For each neighbor of the current vertex, if the neighbor has not been visited (!visited[neighbour]), it is marked as visited and added to the queue.
+This process continues until the queue becomes empty, indicating that all vertices reachable from the source have been visited.
+
+Parallelization:
+#pragma omp parallel for shared(adj_list, visited, q) schedule(dynamic)
+This pragma directive parallelizes the loop that iterates over the neighbors of the current vertex.
+shared(adj_list, visited, q) specifies that the loop variables are shared among threads.
+schedule(dynamic) dynamically distributes loop iterations among threads to balance workload.
