@@ -1,0 +1,26 @@
+merge Function:
+This function merges two sorted subarrays into a single sorted array.
+It takes three parameters: the array arr, and the indices l, m, and r, where l is the starting index of the first subarray, m is the ending index of the first subarray, and r is the ending index of the second subarray.
+The function creates two temporary arrays L and R to store the elements of the two subarrays.
+It then merges the elements of L and R back into the original array arr.
+
+merge_sort Function:
+This function implements the merge sort algorithm recursively.
+It takes three parameters: the array arr, and the indices l and r, where l is the starting index of the subarray to be sorted and r is the ending index.
+If the size of the subarray is greater than 1, the function calculates the middle index m and recursively calls merge_sort on the left and right halves of the array.
+After sorting the two halves, it calls the merge function to merge them into a single sorted array.
+
+parallel_merge_sort Function:
+This function is a wrapper for the parallel version of merge sort.
+It creates a parallel region using #pragma omp parallel and calls the merge_sort function with a single task (#pragma omp single) to initiate the parallel merge sort.
+
+Main Function:
+In the main function, a test array arr is defined with some initial values.
+The execution time of the sequential merge sort algorithm is measured using the omp_get_wtime() function before and after calling merge_sort.
+Similarly, the execution time of the parallel merge sort algorithm is measured using the parallel_merge_sort function.
+Finally, the total execution times for both sequential and parallel merge sort are printed to the standard output.
+
+Parallelization:
+OpenMP directives (#pragma omp task and #pragma omp single) are used to parallelize the merge sort algorithm.
+The parallel version divides the sorting task into smaller subtasks, which are executed concurrently by multiple threads.
+This parallelization helps improve the performance of the merge sort algorithm by utilizing multiple CPU cores.
