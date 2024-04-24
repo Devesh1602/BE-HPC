@@ -1,0 +1,59 @@
+Let's compare the time complexity (TC) and space complexity (SC) between sequential and parallel implementations for the mentioned algorithms:
+
+1. **Breadth First Search (BFS) and Depth First Search (DFS)**:
+   - Sequential:
+     - TC: O(V + E)
+     - SC: O(V) for BFS (queue), O(V) for DFS (recursion stack)
+   - Parallel (OpenMP):
+     - TC: O(V + E) remains the same as the work per vertex/edge does not change significantly.
+     - SC: O(V) for both BFS and DFS due to parallelism overhead, additional memory may be used for parallel data structures.
+
+2. **Bubble Sort and Merge Sort**:
+   - Sequential:
+     - Bubble Sort:
+       - TC: O(n^2) average/worst-case, O(n) best-case
+       - SC: O(1) for both in-place sorting algorithms
+     - Merge Sort:
+       - TC: O(n log n) in all cases
+       - SC: O(n) for the auxiliary arrays
+   - Parallel (OpenMP for Bubble Sort, Merge Sort typically isn't parallelized):
+     - Bubble Sort:
+       - TC: Same as sequential, as parallelizing bubble sort does not reduce the number of comparisons.
+       - SC: O(1) for Bubble Sort remains the same as it's an in-place algorithm.
+     - Merge Sort:
+       - TC: Same as sequential (O(n log n)) as parallelizing merge sort would require additional work.
+       - SC: O(n) for Merge Sort remains the same due to the need for auxiliary arrays.
+
+3. **Parallel Reduction Operations**:
+   - Sequential:
+     - TC: Depends on the operation, typically O(n) for linear scans.
+     - SC: Depends on the operation, generally O(1) for min, max, sum, and average.
+   - Parallel (OpenMP):
+     - TC: Typically O(log n) due to the reduction tree structure.
+     - SC: O(1) for each thread, but overall SC depends on the algorithm and input size.
+
+4. **CUDA Programs**:
+   - Sequential:
+     - TC and SC follow the same patterns as mentioned earlier for each algorithm.
+   - Parallel (CUDA):
+     - TC and SC can vary based on the CUDA implementation, but generally, CUDA can achieve lower TC and SC compared to CPU-based parallelism due to the massively parallel architecture of GPUs.
+
+1. **Addition of Two Large Vectors**:
+   - Sequential:
+     - TC: O(n), where n is the size of the vectors, as it requires linear time to add corresponding elements.
+     - SC: O(n) for the input vectors and O(n) for the output vector, assuming no additional space is used for temporary variables.
+   - Parallel (CUDA):
+     - TC: O(n), as each element can be processed independently in parallel, resulting in linear time.
+     - SC: O(n) for the input vectors, O(n) for the output vector, and additional space may be required for thread blocks, shared memory, and temporary variables.
+
+2. **Matrix Multiplication**:
+   - Sequential:
+     - TC: O(n^3), where n is the size of the matrices, as it requires three nested loops to perform the multiplication.
+     - SC: O(n^2) for the input matrices and O(n^2) for the output matrix, assuming no additional space is used for temporary variables.
+   - Parallel (CUDA):
+     - TC: O(n^3/p), where p is the number of CUDA threads, as each thread can compute a part of the multiplication independently, reducing the time complexity.
+     - SC: O(n^2) for the input matrices, O(n^2) for the output matrix, and additional space may be required for thread blocks, shared memory, and temporary variables.
+
+In summary, the time complexity for both addition of large vectors and matrix multiplication remains the same between sequential and parallel implementations in terms of the big O notation. However, the actual execution time can be significantly reduced with parallel CUDA implementations due to concurrent processing.
+
+The space complexity is also similar between sequential and parallel implementations in terms of big O notation, but additional memory may be required for parallel computations such as thread blocks, shared memory, and temporary variables in the parallel CUDA implementations.
