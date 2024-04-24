@@ -1,0 +1,20 @@
+bubble_sort_odd_even Function:
+This function implements the parallel bubble sort algorithm using the odd-even transposition method.
+It repeatedly performs two phases of comparisons and swaps until the array is sorted.
+The variable isSorted is used to determine whether the array is sorted in each iteration.
+Inside the while loop, two parallel for loops are used to perform the even and odd phases of the algorithm.
+In the even phase (for loop with increment i += 2), each thread compares and swaps adjacent elements at even indices.
+In the odd phase (for loop with increment i += 2 starting from i = 1), each thread compares and swaps adjacent elements at odd indices.
+The isSorted flag is updated based on whether any swaps were made during the iteration.
+
+Main Function:
+In the main function, a test array arr is defined with some initial values.
+The execution time of the parallel bubble sort algorithm is measured using the omp_get_wtime() function from the OpenMP library.
+The start time is recorded before calling the bubble_sort_odd_even function, and the end time is recorded after its execution.
+The total execution time is calculated as the difference between end and start.
+Finally, the total execution time is printed to the standard output.
+
+Parallelization:
+OpenMP directives (#pragma omp parallel for) are used to parallelize the two phases of the bubble sort algorithm.
+Each phase is executed in parallel by multiple threads, with each thread handling a subset of elements in the array.
+Parallelization is achieved by distributing the work of comparing and swapping elements among multiple threads, improving the overall performance of the algorithm.
