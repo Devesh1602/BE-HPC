@@ -1,0 +1,33 @@
+#OPENMP
+
+Installation commands of g++ and openmp-
+    1.sudo apt-get install g++
+    2.sudo apt-get install libomp.dev
+
+create file using command-
+    1.Cat >filename.cpp
+    2.Write code in terminal and press ctrl D to save the code.
+
+compile file use command-
+    1.g++ -o filename –fopenmp filename.cpp
+
+Run file using command-
+    1. ./filename
+
+STARTING COMMANDS FOR CUDA :
+ 
+# Check CUDA version
+!nvcc --version
+
+# Install CUDA package
+!pip install git+https://github.com/afnan47/cuda.git
+
+# Load nvcc plugin
+%load_ext nvcc_plugin
+
+In code, write, %%writefile filename.cu
+
+OUTPUT COMMANDS FOR CUDA :
+
+!nvcc filename.cu -o filename
+!./filename
