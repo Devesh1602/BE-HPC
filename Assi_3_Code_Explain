@@ -1,0 +1,23 @@
+This function finds the minimum value in the given array arr.
+It initializes min_value to INT_MAX to ensure that any element in the array will be smaller than min_value.
+The #pragma omp parallel for reduction(min: min_value) directive parallelizes the loop and performs a reduction operation on min_value. Each thread maintains its own local copy of min_value, and the minimum of all local copies is computed at the end of the loop.
+Inside the loop, each thread compares the current element of the array with its local copy of min_value. If the current element is smaller, it updates the local copy of min_value.
+After the loop, the minimum value across all threads is printed.
+
+max_reduction Function:
+This function is similar to min_reduction, but it finds the maximum value in the array using a reduction operation with the max clause.
+sum_reduction Function:
+This function calculates the sum of all elements in the array using a reduction operation with the + clause.
+
+average_reduction Function:
+This function calculates the average of all elements in the array using a reduction operation with the + clause.
+After computing the sum of all elements, it divides the sum by the size of the array to obtain the average.
+
+Main Function:
+In the main function, a test array arr is defined with some initial values.
+Each reduction operation function is called with arr as an argument to find the minimum, maximum, sum, and average values in the array.
+
+Parallelization:
+OpenMP directives (#pragma omp parallel for) are used to parallelize the loop iterations in each reduction operation function.
+The reduction clause specifies the reduction operation to be performed (min, max, or +) and the variable to be reduced (min_value, max_value, or sum).
+OpenMP takes care of dividing the loop iterations among multiple threads, performing the reduction operation on each thread's local copy of the variable, and combining the results to obtain the final result.
